@@ -1,0 +1,5 @@
+package com.medsync.repository;
+
+public class RoleDataSeeder {
+
+}

@@ -1,0 +1,15 @@
+package com.medsync.auth.playload.request;
+
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+
+public class SignUpRequest {
+	
+	private String userName;
+	
+	private String email;
+	
+	@NotBlank(message = "Password cannot be blank")
+    @Size(min = 6, max = 40, message = "Password must be between 6 and 40 characters")
+	private String password;
+}

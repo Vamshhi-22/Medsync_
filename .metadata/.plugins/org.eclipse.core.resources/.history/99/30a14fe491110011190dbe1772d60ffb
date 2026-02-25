@@ -1,0 +1,5 @@
+package com.medsync.auth.advice;
+
+public class GlobalExceptionHandler {
+
+}

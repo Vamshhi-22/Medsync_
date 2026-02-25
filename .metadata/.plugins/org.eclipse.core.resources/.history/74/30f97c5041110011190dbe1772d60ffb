@@ -1,0 +1,42 @@
+package com.medsync.auth.controllers;
+
+import java.beans.Encoder;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.medsync.auth.model.User;
+import com.medsync.auth.playload.request.SignUpRequest;
+import com.medsync.auth.playload.response.SignUpResponse;
+import com.medsync.auth.repository.UserRepository;
+
+@RestController
+@RequestMapping("/api/auth")
+public class AuthController {
+
+	private final UserRepository repository;
+	
+	private final PasswordEncoder encoder;
+	
+	public AuthController(UserRepository repository, PasswordEncoder encoder) {
+		this.repository = repository;
+		this.encoder = encoder;
+	}
+
+	public ResponseEntity<SignUpResponse> registerUser(@RequestBody SignUpRequest  signUpRequest)
+	{
+		if(repository.existsByUserName(signUpRequest.getUserName()))
+		{
+			return ResponseEntity.badRequest()
+					.body(new SignUpResponse(signUpRequest.getUserName(),"User Name alredy exsits"));
+		}
+	User user = new User(signUpRequest.getUserName(), signUpRequest.getEmail(), encoder.encode(signUpRequest.getPassword()));
+		
+		repository.save(user);
+		
+		
+	}
+}

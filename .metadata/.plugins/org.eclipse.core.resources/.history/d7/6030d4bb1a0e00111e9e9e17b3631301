@@ -1,0 +1,5 @@
+package com.medsync.repository;
+
+public interface UserRepository {
+
+}

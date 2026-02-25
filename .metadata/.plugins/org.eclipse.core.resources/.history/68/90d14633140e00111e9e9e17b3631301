@@ -1,0 +1,42 @@
+package com.medsync.model;
+
+import java.util.HashSet;
+import java.util.Set;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.medsync.model.audit.BaseAuditEntity;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+
+@Entity
+@Table(name = "users", uniqueConstraints = { @UniqueConstraint(columnNames = "userName"),
+		@UniqueConstraint(columnNames = "email") })
+public class User extends BaseAuditEntity{
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private long userId;
+
+	@NotBlank
+	@Size(max = 20)
+	private String userName;
+
+	@NotBlank
+	@Size(max = 50)
+	private String email;
+
+	@NotBlank
+	@Size(max = 120)
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+	private String password;
+	
+	private Set<Role> roles = new HashSet<Role>();
+
+}

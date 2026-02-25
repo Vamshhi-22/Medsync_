@@ -1,0 +1,24 @@
+package com.medsync.auth.advice;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+import com.medsync.auth.exceptions.UserAlreadyExistsException;
+import com.medsync.auth.playload.response.SignUpResponse;
+
+@RestControllerAdvice
+public class GlobalExceptionHandler {
+
+	public ResponseEntity<SignUpResponse> handleUserAlreadyExists(UserAlreadyExistsException exp) {
+		return ResponseEntity.badRequest().body(new SignUpResponse(null, exp.getMessage()));
+	}
+
+	@ExceptionHandler(AuthenticationException.class)
+	public ResponseEntity<SignUpResponse> handleAuthenticationException(AuthenticationException exp) {
+		return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+				.body(new SignUpResponse(null, "Error: Invalid username or password!"));
+	}
+}

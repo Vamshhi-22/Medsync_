@@ -1,0 +1,36 @@
+package com.medsync.auth.service;
+
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+
+import com.medsync.auth.exceptions.UserAlreadyExistsException;
+import com.medsync.auth.model.User;
+import com.medsync.auth.playload.request.SignUpRequest;
+import com.medsync.auth.repository.UserRepository;
+import org.springframework.transaction.annotation.Transactional;
+
+@Service
+public class AuthService {
+
+	private final UserRepository repository;
+
+	private final PasswordEncoder encoder;
+
+	public AuthService(UserRepository repository, PasswordEncoder encoder) {
+		super();
+		this.repository = repository;
+		this.encoder = encoder;
+	}
+
+	@Transactional
+	public User registerUser(SignUpRequest request) {
+		if (repository.existsByUserName(request.getUserName())) {
+
+			throw new UserAlreadyExistsException(request.getUserName() + " already exists");
+		}
+		User user = new User(request.getUserName(), request.getEmail(), encoder.encode(request.getPassword()));
+		System.out.println("checking data " + user.getUserName());
+		return repository.save(user);
+
+	}
+}

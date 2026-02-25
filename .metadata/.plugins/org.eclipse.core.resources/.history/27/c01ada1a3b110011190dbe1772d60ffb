@@ -1,0 +1,5 @@
+package com.medsync.auth.playload.response;
+
+public enum SignUpResponse {
+
+}

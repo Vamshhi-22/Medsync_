@@ -1,0 +1,5 @@
+package com.medsync.model;
+
+public class Role {
+
+}
