@@ -1,5 +1,0 @@
-package com.medsync.auth.playload.response;
-
-public class JwtResponse {
-
-}

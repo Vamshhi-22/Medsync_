@@ -1,5 +1,0 @@
-package com.medsync.auth.security;
-
-public class WebSecurityConfig {
-
-}

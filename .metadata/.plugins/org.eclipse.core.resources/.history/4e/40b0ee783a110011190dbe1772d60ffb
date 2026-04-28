@@ -1,5 +1,0 @@
-package com.medsync.auth.playload.request;
-
-public class SignUpRequest {
-
-}

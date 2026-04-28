@@ -1,5 +1,0 @@
-package com.medsync.model.audit;
-
-public class BaseAuditEntity {
-
-}
